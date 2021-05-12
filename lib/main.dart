@@ -4,34 +4,6 @@ void main() {
   runApp(MyApp());
 }
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         home: Scaffold(
-//       appBar: AppBar(
-//         title: Text("Aplikasi Pertama"),
-//       ),
-//       body: Center(
-//         child: Container(
-//           padding: EdgeInsets.all(10),
-//             width: 200,
-//             height: 100,
-//             color: Colors.lime,
-//             child: Text(
-//               "Coba Aplikasi Supaya saya bisa, saya sungguh-sungguh memperlajarinya cekgu",
-//               maxLines: 2,
-//               overflow: TextOverflow.ellipsis,
-//               textAlign: TextAlign.center,
-//               style: TextStyle(fontWeight: FontWeight.bold),
-//             )),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         child: Icon(Icons.ac_unit),
-//       ),
-//     ));
-//   }
-// }
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -39,15 +11,49 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int number = 0;
+  String stateKata = "Angka";
+  String kata = "Huruf";
+  int pengali = 1;
+  String hasil = "";
+
+  void hitKali() {
+    setState(() {
+      pengali = pengali * 2;
+    });
+  }
+
   void hitTambah() {
     setState(() {
-      number = number + 1;
+      if (stateKata == "Angka") {
+        number = number + pengali;
+        hasil = hasil + " " + number.toString();
+      } else {
+        number = number + pengali;
+        hasil = hasil + " " + String.fromCharCode(number + 64);
+      }
+    });
+  }
+
+  void hitGanti() {
+    setState(() {
+      if (kata == "Huruf") {
+        kata = "Angka";
+        stateKata = "Huruf";
+      } else {
+        kata = "Huruf";
+        stateKata = "Angka";
+      }
+      
     });
   }
 
   void hitReset() {
     setState(() {
       number = 0;
+      pengali = 1;
+      stateKata = "Angka";
+      kata = "Huruf";
+      hasil = "";
     });
   }
 
@@ -62,25 +68,41 @@ class _MyAppState extends State<MyApp> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               gradient:
-                  LinearGradient(colors: <Color>[Colors.lime, Colors.orange])),
+                  LinearGradient(colors: <Color>[Colors.yellow, Colors.lime])),
           margin: EdgeInsets.all(20),
           width: double.infinity,
           child: Column(
             children: <Widget>[
-              Text("Baris 1"),
-              Text(number.toString()),
+              Text("Pengali : " + pengali.toString()),
+              Text("Hasil : " + hasil),
+              Text(stateKata),
               Row(
                 children: <Widget>[
+                  
+                  RaisedButton(
+                    onPressed: hitKali,
+                    padding: EdgeInsets.all(20),
+                    child: Text("Kalikan dengan 2"),
+                  ),
                   RaisedButton(
                     onPressed: hitTambah,
-                    child: Text("Tambah"),
+                    padding: EdgeInsets.all(20),
+                    child: Text("Tambahkan"),
+                  ),
+                  RaisedButton(
+                    onPressed: hitGanti,
+                    padding: EdgeInsets.all(20),
+                    color: Colors.blue,
+                    child: Text(kata),
                   ),
                   RaisedButton(
                     onPressed: hitReset,
-                    child: Text("Reset"),
+                    padding: EdgeInsets.all(20),
+                    color: Colors.blue,
+                    child: Text("RESET"),
                   )
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               )
             ],
             mainAxisAlignment: MainAxisAlignment.center,
